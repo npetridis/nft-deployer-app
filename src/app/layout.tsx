@@ -1,6 +1,13 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import "@rainbow-me/rainbowkit/styles.css";
 import "./globals.css";
+import { Providers } from "./providers";
+import Header from "@/components/Header";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Github, MessageCircle, Twitter } from "lucide-react";
+import Image from "next/image";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,7 +34,69 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <Providers>
+          <div className="flex flex-col min-h-screen font-[family-name:var(--font-geist-sans)]">
+            <Header />
+            <main className="flex-1">{children}</main>
+            <footer className="border-t py-4 md:py- row-start-2">
+              <div className="container">
+                <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+                  <div className="flex items-center gap-2">
+                    <Image
+                      src="/placeholder.svg?height=24&width=24"
+                      alt="NFT"
+                      width={24}
+                      height={24}
+                      className="rounded-md bg-amber-200"
+                    />
+                    <span className="font-semibold">NFT Creator</span>
+                  </div>
+                  <div className="flex flex-wrap justify-center gap-6 text-sm text-muted-foreground">
+                    <Link href="/terms" className="hover:underline">
+                      Terms of Service
+                    </Link>
+                    <Link href="/privacy" className="hover:underline">
+                      Privacy Policy
+                    </Link>
+                    <span>Powered by Ethereum</span>
+                  </div>
+                  <div className="flex gap-4">
+                    <Link
+                      href="https://twitter.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Button variant="ghost" size="icon">
+                        <Twitter className="h-5 w-5" />
+                        <span className="sr-only">Twitter</span>
+                      </Button>
+                    </Link>
+                    <Link
+                      href="https://discord.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Button variant="ghost" size="icon">
+                        <MessageCircle className="h-5 w-5" />
+                        <span className="sr-only">Discord</span>
+                      </Button>
+                    </Link>
+                    <Link
+                      href="https://github.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Button variant="ghost" size="icon">
+                        <Github className="h-5 w-5" />
+                        <span className="sr-only">GitHub</span>
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </footer>
+          </div>
+        </Providers>
       </body>
     </html>
   );

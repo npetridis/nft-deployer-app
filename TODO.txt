@@ -1,0 +1,2 @@
+* serialize zustand store in local storage
+* upload created nfts on opensea for sale
