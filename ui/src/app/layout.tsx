@@ -8,6 +8,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Github, MessageCircle, Twitter } from "lucide-react";
 import Image from "next/image";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,6 +39,7 @@ export default function RootLayout({
           <div className="flex flex-col min-h-screen font-[family-name:var(--font-geist-sans)]">
             <Header />
             <main className="flex-1">{children}</main>
+            <Toaster />
             <footer className="border-t py-4 md:py- row-start-2">
               <div className="container">
                 <div className="flex flex-col md:flex-row justify-between items-center gap-6">

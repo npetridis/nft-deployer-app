@@ -9,8 +9,11 @@ import { useCollectionStore } from "@/store/collectionStore"; // update path if 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useDeployNftCollection } from "@/lib/hooks/useDeployNftCollection";
+import { useAccount } from "wagmi";
+import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
 
-// 1) Define a Zod schema for form validation
 const createCollectionSchema = z.object({
   // image: z
   //   .any()
@@ -20,16 +23,18 @@ const createCollectionSchema = z.object({
   ticker: z.string().min(1, "Ticker is required."),
 });
 
-// 2) Infer the TS type for the form inputs from the schema
 type CreateCollectionFormValues = z.infer<typeof createCollectionSchema>;
 
 export default function CreateCollectionPage() {
   const router = useRouter();
+  const { address } = useAccount();
   const setCollectionData = useCollectionStore(
     (state) => state.setCollectionData
   );
 
-  // 3) Initialize react-hook-form with Zod validation
+  const { deployNftCollection, isDeploying, txHash, contractAddress } =
+    useDeployNftCollection();
+
   const {
     register,
     handleSubmit,
@@ -39,15 +44,33 @@ export default function CreateCollectionPage() {
   });
 
   // 4) Submission handler
-  const onSubmit = (data: CreateCollectionFormValues) => {
+  const onSubmit = async (formData: CreateCollectionFormValues) => {
     // Convert data.image from FileList to FileList | null
     // const imageFileList = data.image instanceof FileList ? data.image : null;
 
+    if (!address) {
+      alert("Please connect your wallet.");
+      return;
+    }
+
     setCollectionData({
       image: null,
-      name: data.name,
-      ticker: data.ticker,
+      name: formData.name,
+      ticker: formData.ticker,
     });
+
+    await deployNftCollection({
+      ownderAddress: address,
+      name: formData.name,
+      ticker: formData.ticker,
+    });
+
+    toast("Transaction is successful.", {
+      description: "Your NFT collection is being deployed.",
+      duration: 5000,
+    });
+
+    return;
 
     // Navigate to the next step
     router.push("/define-nfts");
@@ -81,7 +104,6 @@ export default function CreateCollectionPage() {
             </p>
           )}
         </div> */}
-
         {/* Name */}
         <div className="flex flex-col space-y-2">
           <Label htmlFor="name">Collection Name</Label>
@@ -94,7 +116,6 @@ export default function CreateCollectionPage() {
             <p className="text-red-500 text-sm">{errors.name.message}</p>
           )}
         </div>
-
         {/* Ticker */}
         <div className="flex flex-col space-y-2">
           <Label htmlFor="ticker">Collection Ticker</Label>
@@ -103,13 +124,25 @@ export default function CreateCollectionPage() {
             <p className="text-red-500 text-sm">{errors.ticker.message}</p>
           )}
         </div>
-
         {/* Continue Button */}
         <div className="pt-4">
-          <Button type="submit" variant={"default"}>
-            Continue
+          <Button type="submit" variant={"default"} disabled={isDeploying}>
+            {isDeploying ? (
+              <>
+                <Loader2 className="mr-2 animate-spin h-4 w-4" />
+                Deploying...
+              </>
+            ) : (
+              "Continue"
+            )}
           </Button>
         </div>
+        {contractAddress && txHash && (
+          <div className="flex flex-col space-y-2">
+            <div>tx hash: {txHash}</div>
+            <div>contract: {contractAddress}</div>
+          </div>
+        )}
       </form>
     </div>
   );
