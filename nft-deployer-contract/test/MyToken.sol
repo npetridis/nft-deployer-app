@@ -2,14 +2,14 @@
 pragma solidity ^0.8.13;
 
 import {Test, console} from "forge-std/Test.sol";
-import {MyToken} from "../src/MyToken.sol";
+import {NftFactory} from "../src/NftFactory.sol";
 
 contract TestContract is Test {
-    MyToken c;
+    NftFactory c;
     address owner = address(0x123);
 
     function setUp() public {
-        c = new MyToken(owner, 'MyToken', 'MTK');
+        c = new NftFactory(owner);
     }
 
     function testBar() public {
