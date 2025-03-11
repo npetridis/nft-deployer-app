@@ -78,7 +78,7 @@ export default function CollectionList({
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center my-12 h-[40vh]">
+      <div className="flex justify-center items-center my-12 h-[30vh]">
         <Loader2 className="h-4 w-4 animate-spin mr-4" />
         <p>Loading your collections...</p>
       </div>
