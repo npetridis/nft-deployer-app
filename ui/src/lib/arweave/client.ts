@@ -1,5 +1,4 @@
 import Arweave from "arweave";
-import fs from "fs";
 
 // Initialize the Arweave client
 export const arweave = Arweave.init({
@@ -10,16 +9,17 @@ export const arweave = Arweave.init({
 
 // Load your wallet key
 export const getWallet = async () => {
-  const keyfilePath = process.env.ARWEAVE_KEY_FILE_PATH;
-  if (!keyfilePath) {
-    throw new Error(
-      "Arweave key file path not specified in environment variables"
-    );
+  if (typeof window !== "undefined") {
+    throw new Error("Wallet access should only be done server-side");
+  }
+
+  const keyString = process.env.ARWEAVE_KEY;
+  if (!keyString) {
+    throw new Error("Arweave key not specified in environment variables");
   }
 
   try {
-    const rawKey = fs.readFileSync(keyfilePath);
-    return JSON.parse(rawKey.toString());
+    return JSON.parse(keyString);
   } catch (error) {
     console.error("Error loading Arweave wallet:", error);
     throw error;
