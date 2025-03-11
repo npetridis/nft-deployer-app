@@ -7,6 +7,11 @@ import { usePathname } from "next/navigation";
 const menuItems = [
   { label: "Home", href: "/" },
   { label: "My Collections", href: "/collections" },
+  {
+    label: "GitHub",
+    href: "https://github.com/npetridis/nft-deployer-app",
+    linkProps: { target: "_blank", rel: "noopener noreferrer" },
+  },
 ];
 
 export default function NavItems() {
@@ -27,6 +32,7 @@ export default function NavItems() {
                     ? "text-blue-500"
                     : "text-secondary-foreground"
                 )}
+                {...item.linkProps}
               >
                 {item.label}
               </Link>
