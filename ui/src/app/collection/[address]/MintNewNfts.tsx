@@ -15,7 +15,12 @@ export const MintNewNfts = ({
   const collectionAddress = params.address as Address;
   const { address } = useAccount();
 
-  const accountIsOwner = address === collectionOnwer;
+  if (!address || !collectionAddress) {
+    return null;
+  }
+
+  const accountIsOwner =
+    address.toLowerCase() === collectionOnwer.toLowerCase();
 
   if (!accountIsOwner) {
     return null;
