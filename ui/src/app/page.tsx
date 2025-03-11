@@ -1,3 +1,4 @@
+import HowItWorks from "@/components/HowItWorks";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -47,6 +48,8 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        <HowItWorks />
 
         {/* Featured NFT Showcase */}
         <section className="bg-muted/50 py-16 w-full">
