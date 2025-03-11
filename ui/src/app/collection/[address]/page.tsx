@@ -10,19 +10,16 @@ import { NftGrid } from "./NftGrid";
 export default async function CollectionPage({
   params,
 }: {
-  params: { address: string };
+  params: Promise<{ address: string }>;
 }) {
+  const { address } = await params;
   try {
     // Validate the address format (basic check)
-    if (
-      !params.address ||
-      !params.address.startsWith("0x") ||
-      params.address.length !== 42
-    ) {
+    if (!address || !address.startsWith("0x") || address.length !== 42) {
       return notFound();
     }
 
-    const collectionAddress = params.address as Address;
+    const collectionAddress = address as Address;
 
     // Fetch collection data and NFTs in parallel
     const [collectionInfo, nfts] = await Promise.all([
@@ -134,12 +131,11 @@ export default async function CollectionPage({
 export async function generateMetadata({
   params,
 }: {
-  params: { address: string };
+  params: Promise<{ address: string }>;
 }) {
+  const { address } = await params;
   try {
-    const collectionInfo = await getCollectionDetailsAction(
-      params.address as Address
-    );
+    const collectionInfo = await getCollectionDetailsAction(address as Address);
     return {
       title: `${collectionInfo.name} | NFT Collection`,
       description: `View the ${collectionInfo.name} NFT collection on the blockchain`,

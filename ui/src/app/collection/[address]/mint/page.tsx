@@ -7,18 +7,16 @@ import MintForm from "./MintForm";
 export default async function MintNftsPage({
   params,
 }: {
-  params: { address: string };
+  params: Promise<{ address: string }>;
 }) {
+  const { address } = await params;
   // Validate address format
-  if (
-    !params.address ||
-    !params.address.startsWith("0x") ||
-    params.address.length !== 42
-  ) {
+  // TODO: replace with zod
+  if (!address || !address.startsWith("0x") || address.length !== 42) {
     return notFound();
   }
 
-  const collectionAddress = params.address as Address;
+  const collectionAddress = address as Address;
 
   try {
     // Get collection information to verify it exists and for display
@@ -90,12 +88,18 @@ export default async function MintNftsPage({
 export async function generateMetadata({
   params,
 }: {
-  params: { address: string };
+  params: Promise<{ address: string }>;
 }) {
+  const { address } = await params;
+
+  if (!address) {
+    return {
+      title: "Mint NFTs",
+      description: "Create new NFTs for your collection",
+    };
+  }
   try {
-    const collectionInfo = await getCollectionDetailsAction(
-      params.address as Address
-    );
+    const collectionInfo = await getCollectionDetailsAction(address as Address);
     return {
       title: `Mint NFTs | ${collectionInfo.name}`,
       description: `Create new NFTs for the ${collectionInfo.name} collection`,
