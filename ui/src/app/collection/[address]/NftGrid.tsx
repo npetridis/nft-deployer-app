@@ -166,7 +166,7 @@ export function NftGrid({ nfts, collectionAddress }: NftGridProps) {
                         className="px-2 py-1 bg-gray-50 rounded-md text-xs"
                       >
                         <span className="font-semibold">
-                          {attr.trait_type || (attr as any).traitType}:
+                          {attr.trait_type}:
                         </span>{" "}
                         {attr.value}
                       </div>
