@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/carousel";
 import { ChevronRight } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -26,9 +27,13 @@ export default function Home() {
                 No coding required. Mint, manage, and share your digital assets
                 with the world on your favorite blockchain.
               </p>
-              <Button size="lg" className="gap-2">
-                Create Your Collection
-                <ChevronRight className="h-4 w-4" />
+              <Button size="lg">
+                <Link href="/create-collection">
+                  <div className="flex items-center gap-2">
+                    Create Your Collection
+                    <ChevronRight className="h-4 w-4" />
+                  </div>
+                </Link>
               </Button>
             </div>
             <div className="relative h-[350px] md:h-[450px] rounded-lg overflow-hidden">

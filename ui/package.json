@@ -14,6 +14,7 @@
     "@radix-ui/react-slot": "^1.1.2",
     "@rainbow-me/rainbowkit": "^2.2.4",
     "@tanstack/react-query": "^5.66.11",
+    "arweave": "^1.15.5",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "embla-carousel-react": "^8.5.2",

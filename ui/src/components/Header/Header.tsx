@@ -13,7 +13,7 @@ export async function Header() {
         <Link href={"/"}>
           <div className="flex items-center gap-2 mr-4">
             <div className="h-5 w-5 bg-black" />
-            <span className="font-medium">PostBook</span>
+            <span className="font-medium">Nft Creator</span>
           </div>
         </Link>
 

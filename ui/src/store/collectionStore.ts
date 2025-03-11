@@ -3,7 +3,7 @@ import { Address } from "viem";
 import { create } from "zustand";
 
 export interface NftTrait {
-  traitType: string;
+  trait_type: string;
   value: string;
 }
 

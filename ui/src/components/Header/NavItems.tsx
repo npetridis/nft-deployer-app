@@ -22,9 +22,9 @@ export default function NavItems() {
               <Link
                 href={item.href}
                 className={cn(
-                  "text-md transition-colors hover:text-purple-700",
+                  "text-md transition-colors hover:text-blue-700",
                   pathname === item.href
-                    ? "text-purple-500"
+                    ? "text-blue-500"
                     : "text-secondary-foreground"
                 )}
               >
