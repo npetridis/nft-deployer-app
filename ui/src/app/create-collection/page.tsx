@@ -7,13 +7,14 @@ import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useAccount } from "wagmi";
+import { useAccount, useSwitchChain } from "wagmi";
 import { AlertCircle, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { useDeployFactoryNftCollection } from "@/lib/hooks/useDeployFactoryNftCollection";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { arbitrum } from "viem/chains";
 
 const createCollectionSchema = z.object({
   name: z.string().min(1, "Collection name is required."),
@@ -36,7 +37,10 @@ type CreateCollectionFormValues = z.infer<typeof createCollectionSchema>;
 
 export default function CreateCollectionPage() {
   const router = useRouter();
-  const { address, isConnected } = useAccount();
+  const { address, isConnected, chain } = useAccount();
+  const { switchChainAsync, isPending: isSwitchingNetwork } = useSwitchChain();
+
+  const isArbitrum = chain?.id === arbitrum.id;
 
   const {
     deployNftCollection,
@@ -52,6 +56,24 @@ export default function CreateCollectionPage() {
   } = useForm<CreateCollectionFormValues>({
     resolver: zodResolver(createCollectionSchema),
   });
+
+  const handleSwitchNetwork = async () => {
+    if (!switchChainAsync) {
+      toast.error("Network switching not supported", {
+        description:
+          "Please manually change your network to Arbitrum in your wallet.",
+      });
+    }
+
+    try {
+      await switchChainAsync({ chainId: arbitrum.id });
+    } catch {
+      toast.error("Failed to switch network", {
+        description:
+          "Please manually change your network to Arbitrum in your wallet.",
+      });
+    }
+  };
 
   const onSubmit = async (formData: CreateCollectionFormValues) => {
     if (!address) {
@@ -119,6 +141,32 @@ export default function CreateCollectionPage() {
         </Alert>
       )}
 
+      {isConnected && !isArbitrum && (
+        <Alert className="mb-6 bg-yellow-50 border-yellow-200">
+          <AlertCircle className="h-4 w-4 text-yellow-600" />
+          <AlertTitle>Wrong Network</AlertTitle>
+          <AlertDescription className="flex flex-col gap-3">
+            <p>This application only works on the Arbitrum network.</p>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleSwitchNetwork}
+              disabled={isSwitchingNetwork}
+              className="w-fit flex items-center gap-2"
+            >
+              {isSwitchingNetwork ? (
+                <>
+                  <Loader2 className="h-3 w-3 animate-spin" />
+                  Switching...
+                </>
+              ) : (
+                <span>Switch to Arbitrum</span>
+              )}
+            </Button>
+          </AlertDescription>
+        </Alert>
+      )}
+
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <div className="flex flex-col space-y-2">
           <Label htmlFor="name">Collection Name</Label>
@@ -139,7 +187,11 @@ export default function CreateCollectionPage() {
           )}
         </div>
         <div className="pt-4">
-          <Button type="submit" variant={"default"} disabled={isDeploying}>
+          <Button
+            type="submit"
+            variant={"default"}
+            disabled={isDeploying || !isArbitrum}
+          >
             {isDeploying ? (
               <>
                 <Loader2 className="mr-1 animate-spin h-4 w-4" />

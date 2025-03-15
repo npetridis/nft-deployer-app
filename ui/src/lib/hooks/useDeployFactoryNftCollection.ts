@@ -187,6 +187,8 @@ export const useDeployFactoryNftCollection = () => {
     } catch (err) {
       console.error("Error deploying NFT collection:", err);
       if (err instanceof Error) {
+        console.log("error message:", err);
+        console.log("----");
         setError(err.message);
       } else {
         setError("Failed to deploy NFT collection");
