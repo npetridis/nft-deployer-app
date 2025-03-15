@@ -39,7 +39,7 @@ export default function Home() {
             </div>
             <div className="relative h-[350px] md:h-[450px] rounded-lg overflow-hidden">
               <Image
-                src="/placeholder.svg?height=450&width=600"
+                src="/arb_arw.png"
                 alt="NFT Collection Creator"
                 fill
                 className="object-cover bg-amber-200"
@@ -52,7 +52,7 @@ export default function Home() {
         <HowItWorks />
 
         {/* Featured NFT Showcase */}
-        <section className="bg-muted/50 py-16 w-full">
+        {/* <section className="bg-muted/50 py-16 w-full">
           <div className="container">
             <h2 className="text-3xl font-bold tracking-tighter text-center mb-10">
               Featured Collections
@@ -95,7 +95,7 @@ export default function Home() {
               <CarouselNext className="right-0" />
             </Carousel>
           </div>
-        </section>
+        </section> */}
       </main>
     </div>
   );

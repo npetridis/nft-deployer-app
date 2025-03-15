@@ -23,7 +23,7 @@ export default function HowItWorks() {
   }, []);
 
   return (
-    <section className="w-full py-24 bg-gradient-to-b from-white to-slate-50 overflow-hidden">
+    <section className="w-full py-24 bg-gradient-to-b from-white to-slate-50">
       <div className="container px-4 mx-auto">
         <div
           className={`text-center mb-16 transition-all duration-700 transform ${
