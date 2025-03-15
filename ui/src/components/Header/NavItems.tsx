@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { ExternalLink } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -27,14 +28,17 @@ export default function NavItems() {
               <Link
                 href={item.href}
                 className={cn(
-                  "text-md transition-colors hover:text-blue-700",
+                  "text-md transition-colors hover:text-blue-700 inline-flex items-center",
                   pathname === item.href
                     ? "text-blue-500"
                     : "text-secondary-foreground"
                 )}
                 {...item.linkProps}
               >
-                {item.label}
+                <span>{item.label}</span>
+                {item.linkProps && (
+                  <ExternalLink className="h-3.5 w-3.5 ml-1 inline-block" />
+                )}
               </Link>
             </li>
           ))}

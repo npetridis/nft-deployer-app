@@ -19,35 +19,9 @@ export default function Footer() {
           </div> */}
           <div className="font-semibold">NFT Creator</div>
           <div className="flex flex-wrap justify-center gap-6 text-sm text-muted-foreground">
-            <Link href="/#" className="hover:underline">
-              Terms of Service
-            </Link>
-            <Link href="/#" className="hover:underline">
-              Privacy Policy
-            </Link>
             <span>Powered by Arbitrum</span>
           </div>
           <div className="flex gap-4">
-            <Link
-              href="https://twitter.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Button variant="ghost" size="icon">
-                <Twitter className="h-5 w-5" />
-                <span className="sr-only">Twitter</span>
-              </Button>
-            </Link>
-            <Link
-              href="https://discord.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Button variant="ghost" size="icon">
-                <MessageCircle className="h-5 w-5" />
-                <span className="sr-only">Discord</span>
-              </Button>
-            </Link>
             <Link
               href="https://github.com/npetridis/nft-deployer-app"
               target="_blank"
