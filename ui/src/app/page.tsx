@@ -9,7 +9,7 @@ export default function Home() {
     <div className="grid grid-rows-[1fr_40px] items-center justify-items-center min-h-screen gap-4 sm:p-6 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-2 row-start-1 items-center sm:items-start">
         {/* Hero Section */}
-        <section className="container py-24 md:py-32">
+        <section className="container py-12">
           <div className="grid gap-10 lg:grid-cols-2 lg:gap-16 items-center">
             <div className="space-y-6">
               <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">
